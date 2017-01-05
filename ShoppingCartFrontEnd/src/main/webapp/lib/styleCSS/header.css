@@ -1,0 +1,28 @@
+.navbar a {
+	color: black;
+}
+
+.nav li a:hover{
+ background:orange;
+}
+
+.navbar-custom {
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+header {
+	height: 180px;
+	padding: 10px 10px;
+	color:black;
+}
+
+h1 {
+	font-size: 50px;
+}
+img{
+widht:50px;
+height:50px;
+margin-top:-5px;
+}

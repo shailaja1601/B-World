@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:security="http://www.springframework.org/schema/security"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+
+<security:http auto-config ="true"> 
+ 
+<security:intercept-url pattern ="/manage**"  
+  access="hasRole('ROLE_ADMIN')"/>  
+<security:intercept-url pattern="/cart/**" 
+      access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>   
+<security:intercept-url pattern="/cart_checkout/**" 
+       access ="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/> 
+    
+       
+        <security:form-login login-page ="/Login"
+                             always-use-default-target = "true"
+                             default-target-url="/validate"
+                             authentication-failure-forward-url = "/loginError"
+                             username-parameter="username"
+                             password-parameter="password" />
+         <security:logout logout-url="/Logout" invalidate-session ="true" logout-success-url ="/" />
+         <security:csrf disabled="true"/>
+         <security:access-denied-handler error-page="/accessDenied"/>
+         <!-- <security:session-management>
+         <security:concurrency-control max-sessions ="1" error-if-maximum-exceeded="true"/>
+         </security:session-management>     -->          
+ </security:http>
+    
+    
+ <security:authentication-manager>
+   <security:authentication-provider>
+     <security:jdbc-user-service 
+       data-source-ref="dataSource"
+       authorities-by-username-query= "SELECT MAIL_ID, role from user WHERE MAIL_ID =?" 
+       users-by-username-query="SELECT MAIL_ID, password , 'true' as enabled from user where MAIL_ID=?"/>
+    </security:authentication-provider>
+  </security:authentication-manager>   
+</beans>

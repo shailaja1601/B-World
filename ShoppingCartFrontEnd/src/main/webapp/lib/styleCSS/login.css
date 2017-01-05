@@ -1,0 +1,9 @@
+
+.container img{
+widht:200px;
+height:250px;
+padding-left:150px;
+ border-left: 1px solid grey;
+ margin-left:150px;
+ margin-top:5px;
+}
